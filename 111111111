@@ -1,0 +1,54 @@
+import java.util.Scanner;
+
+public class main {
+    private static int ans = 1;
+
+    public static void dfs(int arr[], int gr[][], int node, int count, int size) {
+        if(arr[node] == 1) {
+            return;
+        }
+
+        arr[node] = 1;
+        count++;
+
+        for(int j = 0; j < size; j++) {
+            if (gr[node][j] == 1) {
+                if(j != node) {
+                    if(j + 1 < j) {
+                        if(arr[j+1] == 1) {
+                            System.out.println(1);
+                            ans = 0;
+                            return;
+                        }
+                    } else {
+                        if(arr[j] == 1) {
+                            System.out.println(1);
+                            ans = 0;
+                            return;
+                        }
+                    }
+                    dfs(arr, gr, j, count, size);
+                }
+            }
+        }
+    }
+
+    public static void main(String[] args){
+        Scanner input = new Scanner(System.in);
+        int size = input.nextInt();
+        int graph[][] = new int[size][size];
+        int used[] = new int[size];
+
+        for(int i = 0;i < size; i++) {
+            used[i] = 0;
+
+            for(int j = 0;j < size; j++) {
+                graph[i][j] = input.nextInt();
+            }
+        }
+
+        dfs(used, graph, 0, 0, size);
+
+        if(ans == 1) System.out.println(0);
+    }
+}
